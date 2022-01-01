@@ -78,7 +78,6 @@ function bt_insert_question( $args = []){
 		'quiz_id'		=> '',
 		'question'		=> '',
 		'answer'		=> [],
-		'correct'		=> [],
 		'created_at'	=> current_time('mysql'),
 	];
 
@@ -89,7 +88,6 @@ function bt_insert_question( $args = []){
 		$data,
 		[
 			'%d',
-			'%s',
 			'%s',
 			'%s',
 			'%s'
