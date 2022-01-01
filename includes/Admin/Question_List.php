@@ -22,7 +22,7 @@ class Question_List extends \WP_List_Table
 	public function get_columns(){
 		return [
 			'cb'	=>	'<input type="checkbox"/>',
-			'quiz_title' =>	__('Quiz Title', 'beatnik-quiz'),
+			'quiz_id' =>	__('Quiz ID', 'beatnik-quiz'),
 			'question' =>	__('Question', 'beatnik-quiz'),
 			'created_at' =>	__('Date', 'beatnik-quiz'),
 			'action' =>	__('Action', 'beatnik-quiz'),

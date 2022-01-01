@@ -53,7 +53,6 @@ class Question
 		$question = isset( $_POST['question']) ? sanitize_file_name( $_POST['question']): '';
 
 		$answer = isset( $_POST['answer']) ?  $_POST['answer']: [];
-		$correct = isset( $_POST['correct']) ?  $_POST['correct']: [];
 
 		if (empty($quiz_id)) {
 			$this->errors['quiz_id'] = __('Please provide a Quiz Title', 'beatnik-quiz');
@@ -67,19 +66,14 @@ class Question
 			$this->errors['answer'] = __('Please provide a Answer', 'beatnik-quiz');
 		}
 
-		if (empty($correct)) {
-			$this->errors['correct'] = __('Please provide a Correct', 'beatnik-quiz');
-		}
-
 		if (! empty($this->errors)) {
 			return;
 		}
-		wp_die(print_r($correct));
+		// wp_die(print_r($answer));
 		$insert_id = bt_insert_question([
 			'quiz_id'	=> $quiz_id,
 			'question'	=> $question,
 			'answer'	=> wp_json_encode($answer),
-			'correct'	=> wp_json_encode($correct)
 		]);
 
 		if (is_wp_error($insert_id)) {

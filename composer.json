@@ -16,5 +16,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require-dev": {
+        "php-stubs/wordpress-stubs": "dev-master"
+    }
 }
