@@ -24,7 +24,7 @@ class Quiz_List extends \WP_List_Table
 		return [
 			'cb'	=>	'<input type="checkbox"/>',
 			'title' =>	__('Title', 'beatnik-quiz'),
-			'image' =>	__('Image', 'beatnik-quiz'),
+			// 'image' =>	__('Image', 'beatnik-quiz'),
 			'created_at' =>	__('Date', 'beatnik-quiz'),
 		];
 	}

@@ -2,11 +2,11 @@
 
 /** 
  * Plugin Name:       Beatnik Quiz
- * Plugin URI:        https://github.com/
+ * Plugin URI:        https://github.com/DevMehediHasan
  * Description:       Quiz manage for WordPress Developed by Beatnik.
  * Version:           1.0
  * Author:            Mehedi Hasan
- * Author URI:        https://github.com/
+ * Author URI:        https://github.com/DevMehediHasan
  * License:           GPL2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       beatnik-quiz
@@ -66,6 +66,7 @@ final class Beatnik_Quiz {
     }
 
     public function init_plugin(){
+        new Mehedi\BeatnikQuiz\Assets();
         if (is_admin()) {
             new Mehedi\BeatnikQuiz\Admin();
         } else {

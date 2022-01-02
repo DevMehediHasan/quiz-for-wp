@@ -1,6 +1,6 @@
 
 <div class="wrap">
-	<h1 class="wp-heading-inline"><?php _e('New Question', 'beatnik-quiz'); ?></h1>
+	<h1 class="wp-heading-inline"><?php _e('Edit Question', 'beatnik-quiz'); ?></h1>
 
 	<?php //var_dump($this->errors); ?>
 	<form action="" method="POST">

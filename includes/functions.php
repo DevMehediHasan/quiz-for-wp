@@ -78,7 +78,6 @@ function bt_insert_question( $args = []){
 		'quiz_id'		=> '',
 		'question'		=> '',
 		'answer'		=> [],
-		'correct'		=> [],
 		'created_at'	=> current_time('mysql'),
 	];
 
@@ -91,7 +90,6 @@ function bt_insert_question( $args = []){
 			'%d',
 			'%s',
 			'%s',
-			'%s',
 			'%s'
 		]
 	);
@@ -102,7 +100,7 @@ function bt_insert_question( $args = []){
 	return $wpdb->insert_id;
 }
 
-function bt_get_question( $args= []) {
+function bt_get_questions( $args= []) {
 	global $wpdb;
 
 	$defaults  = [
@@ -114,14 +112,14 @@ function bt_get_question( $args= []) {
 
 	$args = wp_parse_args( $args, $defaults);
 
-	$items = $wpdb->get_results(
-		$wpdb->prepare(
+	$sql =$wpdb->prepare(
 			"SELECT * FROM {$wpdb->prefix}quiz_questions
-			ORDER BY %s %s
+			ORDER BY {$args['orderby']} {$args['order']}
 			LIMIT %d, %d",
-			$args['orderby'],$args['order'],$args['offset'],$args['number']
-		)
+			$args['offset'], $args['number']
 	);
+
+	$items = $wpdb->get_results( $sql);
 	return $items;
 }
 
@@ -129,4 +127,12 @@ function bt_question_count(){
 	global $wpdb;
 
 	return (int) $wpdb->get_var("SELECT count(id) FROM {$wpdb->prefix}quiz_questions");
+}
+
+function bt_get_question( $id ) {
+	global $wpdb;
+
+	return $wpdb->get_row(
+		$wpdb->prepare("SELECT * FROM {$wpdb->prefix}quiz_questions WHERE id = %d", $id )
+	);
 }

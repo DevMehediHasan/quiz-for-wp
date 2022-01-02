@@ -10,6 +10,7 @@ class Question
 
 	public function bt_question_page() {
 		$action = isset( $_GET['action']) ? $_GET['action'] : 'list';
+		$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 		switch ( $action ) {
 			case 'new':

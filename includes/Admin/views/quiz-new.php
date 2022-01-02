@@ -1,22 +1,24 @@
 <div class="wrap">
 	<h1 class="wp-heading-inline"><?php _e('New Quiz', 'beatnik-quiz'); ?></h1>
 
-	<?php var_dump($this->errors); ?>
-	<form action="" method="POST">
+	<?php //var_dump($this->errors); ?>
+	<form action="" method="POST" enctype="multipart/form-data">
 		<table class="form-table">
 			<tbody>
-				<tr>
+				<tr class="row">
 					<th scope="row">
 						<label for="title"><?php _e('Title', 'beatnik-quiz'); ?></label>
 					</th>
 
 					<td>
 						<input type="text" name="title" id="title" class="regular-text" value="">
+
 					</td>
 				</tr>
 
 				<tr>
 					<th scope="row">
+						<input type="hidden" name="action" value="image"/>
 						<label for="image"><?php _e('Featured Image', 'beatnik-quiz'); ?></label>
 					</th>
 
@@ -33,3 +35,8 @@
 	</form>
 
 </div>
+
+<script type="text/javascript">
+	
+
+</script>

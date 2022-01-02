@@ -22,10 +22,9 @@ class Question_List extends \WP_List_Table
 	public function get_columns(){
 		return [
 			'cb'	=>	'<input type="checkbox"/>',
-			'quiz_id' =>	__('Quiz ID', 'beatnik-quiz'),
 			'question' =>	__('Question', 'beatnik-quiz'),
+			'quiz_id' =>	__('Quiz ID', 'beatnik-quiz'),
 			'created_at' =>	__('Date', 'beatnik-quiz'),
-			'action' =>	__('Action', 'beatnik-quiz'),
 		];
 	}
 
@@ -42,6 +41,8 @@ class Question_List extends \WP_List_Table
 
 	public function column_quiz_title( $item){
 
+		
+
 		return sprintf(
 			'<a href="%1$s"><strong>%2$s</strong></a>', admin_url('admin.php?page=beatnik-question&action=view&id' . $item->id), $item->quiz_title
 		);
@@ -49,16 +50,15 @@ class Question_List extends \WP_List_Table
 
 	public function column_question( $item){
 
-		return sprintf(
-			'<a href="%1$s"><strong>%2$s</strong></a>', admin_url('admin.php?page=beatnik-question&action=view&id' . $item->id), $item->question
-		);
-	}
+		$actions= [];
 
-	public function column_action( $item){
+		$actions['edit'] = sprintf('<a href="%s" title="%s">%s</a>', admin_url('admin.php?page=beatnik-question&action=edit&id=' . $item->id), $item->id, __('Edit', 'beatnik-quiz'));
+
+		// $actions['delete'] = sprintf('<a href="%s" class="submitdelete" onclick="return confirm(\'Are you sure?\');" title="%s">%s</a>', wp_nonce_url(admin_url('admin-post.php?action=bt_delete_question&id=' . $item->id), $item->id, __('Delete', 'beatnik-quiz')));
 		
 
 		return sprintf(
-			'<a href="%s">Add Answer</a>', admin_url('admin.php?page=beatnik-answer&action=add&id' . $item->id)
+			'<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url('admin.php?page=beatnik-question&action=view&id' . $item->id), $item->question, $this->row_actions( $actions )
 		);
 	}
 
@@ -77,7 +77,7 @@ class Question_List extends \WP_List_Table
 
 		$this->_column_headers = [ $column, $hidden, $sortable ];
 
-		$this->items = bt_get_question();
+		$this->items = bt_get_questions();
 		$this->set_pagination_args( [
 			'total_items'	=>	bt_question_count(),
 			'per_page'		=>	$per_page

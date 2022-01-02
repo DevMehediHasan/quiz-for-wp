@@ -50,7 +50,9 @@ class Quiz
 
 		$title = isset( $_POST['title']) ? sanitize_title( $_POST['title']): '';
 
-		$image = isset( $_POST['image']) ? sanitize_file_name( $_POST['image']): '';
+		// $image = isset( $_POST['image']) ? sanitize_file_name( $_POST['image']): '';
+
+		$image = media_handle_upload('image', 0);
 
 		if (empty($title)) {
 			$this->errors['title'] = __('Please provide a Title', 'beatnik-quiz');
@@ -75,5 +77,18 @@ class Quiz
 		$redirected_to = admin_url('admin.php?page=beatnik-quiz&inserted=true');
 		wp_redirect($redirected_to);
 		exit;
+	}
+
+	public function has_error($key)
+	{
+		return isset($this->errors[$key]) ? true : false;
+	}
+
+	public function get_error($key)
+	{
+		if (isset($this->errors[$key])) {
+			return $this->errors[ $key ];
+		}
+		return false;
 	}
 }
