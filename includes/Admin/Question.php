@@ -51,9 +51,11 @@ class Question
 
 		$quiz_id = isset( $_POST['quiz_id']) ? $_POST['quiz_id']: '';
 
-		$question = isset( $_POST['question']) ? sanitize_file_name( $_POST['question']): '';
+		// $question = isset( $_POST['question']) ? sanitize_file_name( $_POST['question']): '';
+		$question = media_handle_upload('question', 0);
 
-		$answer = isset( $_POST['answer']) ?  $_POST['answer']: [];
+		// $answer = isset( $_POST['answer']) ?  $_POST['answer']: [];
+		$answer = isset( $_POST['answer']) ?  $_POST['answer']: '';
 
 		if (empty($quiz_id)) {
 			$this->errors['quiz_id'] = __('Please provide a Quiz Title', 'beatnik-quiz');
@@ -70,12 +72,16 @@ class Question
 		if (! empty($this->errors)) {
 			return;
 		}
+	
+		// var_dump($answer);
 		// wp_die(print_r($answer));
 		$insert_id = bt_insert_question([
 			'quiz_id'	=> $quiz_id,
 			'question'	=> $question,
-			'answer'	=> wp_json_encode($answer),
+			// 'answer'	=> 'একজন প্রকৃত',
+			'answer'	=> wp_json_encode($answer, JSON_UNESCAPED_UNICODE),
 		]);
+		// var_dump($insert_id);
 
 		if (is_wp_error($insert_id)) {
 			wp_die($insert_id->get_error_message());

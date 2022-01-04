@@ -1,9 +1,14 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
 <div class="wrap">
 	<h1 class="wp-heading-inline"><?php _e('New Question', 'beatnik-quiz'); ?></h1>
 
 	<?php //var_dump($this->errors); ?>
-	<form action="" method="POST">
+	<form action="" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 		<table class="form-table">
 			<tbody class="input_fields_wrap input_qfields_wrap">
 				<tr>
@@ -36,9 +41,6 @@
 					<th scope="row">
 						<label for="question"><?php _e('Question', 'beatnik-quiz'); ?></label>
 						<input type="file" name="question" id="question" class="regular-text" value="">
-						<?php if (isset($this->errors['question'])){ ?>
-							<p class="description error"><?php echo $this->errors['question'] ?></p>
-						<?php } ?>
 					</th>
 				</tr>
 				</div>
@@ -68,7 +70,9 @@
 		<?php submit_button( __( 'Save Question', 'beatnik-quiz' ), 'primary', 'submit_question' ); ?>
 	</form>
 
-</div>
+	</div>
+</body>
+</html>
 
 <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'js/jquery.min.js'; ?>"></script>
 

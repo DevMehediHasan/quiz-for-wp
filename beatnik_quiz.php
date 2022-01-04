@@ -63,6 +63,7 @@ final class Beatnik_Quiz {
         define('BT_QUIZ_PATH', __DIR__);
         define('BT_QUIZ_URL', plugins_url('', BT_QUIZ_FILE));
         define('BT_QUIZ_ASSETS', BT_QUIZ_URL . '/assets');
+        define('BT_QUIZ_TEMPLATE', BT_QUIZ_TEMPLETE . '/includes');
     }
 
     public function init_plugin(){

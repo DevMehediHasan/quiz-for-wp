@@ -1,8 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
 <div class="wrap">
 	<h1 class="wp-heading-inline"><?php _e('New Quiz', 'beatnik-quiz'); ?></h1>
 
 	<?php //var_dump($this->errors); ?>
-	<form action="" method="POST" enctype="multipart/form-data">
+	<form action="" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 		<table class="form-table">
 			<tbody>
 				<tr class="row">
@@ -35,6 +41,9 @@
 	</form>
 
 </div>
+</body>
+</html>
+
 
 <script type="text/javascript">
 	

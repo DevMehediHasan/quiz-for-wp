@@ -8,8 +8,8 @@ function bt_insert_quiz( $args = []){
 	}
 
 	$defaults = [
-		'title'	=> '',
-		'image'	=> '',
+		'title'			=> '',
+		'image'			=> '',
 		'created_at'	=> current_time('mysql'),
 	];
 
@@ -27,7 +27,7 @@ function bt_insert_quiz( $args = []){
 	);
 
 	if (! $inserted) {
-		return new \WP_Error('failed-to-insert', __('Failed to isert data', 'beatnik-quiz'));
+		return new \WP_Error('failed-to-insert', __('Failed to insert data', 'beatnik-quiz'));
 	}
 	return $wpdb->insert_id;
 }
@@ -39,7 +39,7 @@ function bt_get_quiz( $args= []) {
 		'number' => 20,
 		'offset' => 0,
 		'orderby' => 'id',
-		'order' => 'ASC'
+		'order' => 'DESC'
 	];
 
 	$args = wp_parse_args( $args, $defaults);
@@ -82,7 +82,7 @@ function bt_insert_question( $args = []){
 	];
 
 	$data = wp_parse_args( $args, $defaults);
-
+	// var_dump($data);
 	$inserted = $wpdb->insert(
 		"{$wpdb->prefix}quiz_questions",
 		$data,
@@ -95,7 +95,7 @@ function bt_insert_question( $args = []){
 	);
 
 	if (! $inserted) {
-		return new \WP_Error('failed-to-insert', __('Failed to isert data', 'beatnik-quiz'));
+		return new \WP_Error('failed-to-insert', __('Failed to insert data', 'beatnik-quiz'));
 	}
 	return $wpdb->insert_id;
 }
@@ -107,7 +107,7 @@ function bt_get_questions( $args= []) {
 		'number' => 20,
 		'offset' => 0,
 		'orderby' => 'id',
-		'order' => 'ASC'
+		'order' => 'DESC'
 	];
 
 	$args = wp_parse_args( $args, $defaults);
@@ -136,3 +136,22 @@ function bt_get_question( $id ) {
 		$wpdb->prepare("SELECT * FROM {$wpdb->prefix}quiz_questions WHERE id = %d", $id )
 	);
 }
+
+add_action( 'init', function(){
+    add_rewrite_rule(
+        'quiz/([a-z]+)/?$',
+        'index.php?quiz=$matches[1]',
+        'top' );
+}
+
+add_filter( 'query_vars', function($query_vars) );
+    $query_vars[] = 'quiz';
+    return $query_vars;
+}
+
+add_action('template_include', function($template){
+	if ( get_query_var('quiz') == false || get_query_var('quiz') == '' ){
+		return $template;
+	}
+	return BT_QUIZ_TEMPLETE . '/quiz.php';
+});

@@ -48,7 +48,7 @@ class Quiz
 			wp_die('Are You Cheating?');
 		}
 
-		$title = isset( $_POST['title']) ? sanitize_title( $_POST['title']): '';
+		$title = isset( $_POST['title']) ? sanitize_text_field( $_POST['title']): '';
 
 		// $image = isset( $_POST['image']) ? sanitize_file_name( $_POST['image']): '';
 
