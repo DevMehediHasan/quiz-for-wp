@@ -1,11 +1,3 @@
-<?php
-
-echo $_GET['id'];
-
-    echo 'hello';
-    exit();
- ?>
-
 <style>
     .congrats-modal .modal-content {
         position: relative;
@@ -46,36 +38,36 @@ echo $_GET['id'];
             <div class="col-lg-8 col-md-8 pb-4 pb-lg-0">
                 <?php 
 
-                global $wpdb;
+                //global $wpdb;
                     // $result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quizes" );
                     // foreach ( $result as $quiz )   {
-                       $image = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
-                       $title = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
+                       //$image = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
+                      // $title = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
                 ?>
                 <div class="cover">
-                    <img class="img-fluid" src="<?php echo wp_get_original_image_url( $image ); ?>"
+                    <img class="img-fluid" src="https://quiz.coconutforlife.org/storage/images/quiz/thumbnail/1608537184.png"
                         alt="">
                 </div>
                 <div class="title">
                     <h2 class="py-3">
-                        <?php echo $title ?>
+                        How Beauty-Savvy Are You? Take A Quick Quiz!
                     </h2>
                 </div>
 
                 <div class="owl-carousel">
                     <?php
-                        global $wpdb;
-                        $result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quiz_questions" );
-                        foreach ( $result as $ques )   {
+                        //global $wpdb;
+                        //$result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quiz_questions" );
+                        //foreach ( $result as $ques )   {
                         ?>
                             <div class="question-sliders">
                                 <div>
-                                    <img src="<?php echo wp_get_original_image_url( $ques->question ); ?>" alt="">
+                                    <img src="https://quiz.coconutforlife.org/storage/images/question/thumbnail/1608537705.png" alt="">
                                 </div>
                                 <ul class="answers">
                                     <li class="answer d-flex align-items-center justify-content-between"
-                                        data-quiz="<?php echo $ques->answer ?>" data-question="{{$question['id']}}"
-                                        data-answer="<?php echo $ques->answer ?>">
+                                        data-quiz="as" data-question="as"
+                                        data-answer="as">assas
                                         <div class="icon">
                                             <i class="fas fa-check-circle text-success d-none"></i>
                                             <i class="fas fa-times-circle text-danger d-none"></i>
@@ -84,7 +76,7 @@ echo $_GET['id'];
                                 </ul>
                             </div>
 
-                        <?php } ?>
+                        <?php //} ?>
                 </div>
                 
             </div>
