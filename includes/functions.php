@@ -137,21 +137,35 @@ function bt_get_question( $id ) {
 	);
 }
 
-add_action( 'init', function(){
-    add_rewrite_rule(
-        'quiz/([a-z]+)/?$',
-        'index.php?quiz=$matches[1]',
-        'top' );
-}
+// add_action( 'init', function(){
+//     add_rewrite_rule(
+//         'quiz/([a-z]+)/?$',
+//         'index.php?quiz=$matches[1]',
+//         'top' );
+// } );
 
-add_filter( 'query_vars', function($query_vars) );
-    $query_vars[] = 'quiz';
-    return $query_vars;
-}
+// add_filter( 'query_vars', function($query_vars){
+//     $query_vars[] = 'quiz';
+//     return $query_vars;
+// } );
 
-add_action('template_include', function($template){
-	if ( get_query_var('quiz') == false || get_query_var('quiz') == '' ){
-		return $template;
-	}
-	return BT_QUIZ_TEMPLETE . '/quiz.php';
-});
+// add_action('template_include', function($template){
+// 	if ( get_query_var('quiz') == false || get_query_var('quiz') == '' ){
+// 		return $template;
+// 	}
+// 	return get_template_directory . '/quiz.php';
+// });
+
+// add_action( 'init', 'wpse26388_rewrites_init' );
+// function wpse26388_rewrites_init(){
+//     add_rewrite_rule(
+//         'quiz/([0-9]+)/?$',
+//         'index.php?pagename=quiz&quiz_id=$matches[1]',
+//         'top' );
+// }
+
+// add_filter( 'query_vars', 'wpse26388_query_vars' );
+// function wpse26388_query_vars( $query_vars ){
+//     $query_vars[] = 'quiz_id';
+//     return $query_vars;
+// }
