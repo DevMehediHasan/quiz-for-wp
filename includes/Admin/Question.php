@@ -72,14 +72,23 @@ class Question
 		if (! empty($this->errors)) {
 			return;
 		}
-	
-		// var_dump($answer);
+		$i = 1;
+
+		$some = [];
+		foreach($answer as $a) {
+			$b = [];
+			$b['id'] = $i++;
+			$b['title'] = $a[0];
+			$b['status'] = $a[1];
+			array_push($some, $b);
+		}
+		// print_r($some);
 		// wp_die(print_r($answer));
 		$insert_id = bt_insert_question([
 			'quiz_id'	=> $quiz_id,
 			'question'	=> $question,
 			// 'answer'	=> 'একজন প্রকৃত',
-			'answer'	=> wp_json_encode($answer, JSON_UNESCAPED_UNICODE),
+			'answer'	=> wp_json_encode($some, JSON_UNESCAPED_UNICODE),
 		]);
 		// var_dump($insert_id);
 

@@ -137,24 +137,25 @@ function bt_get_question( $id ) {
 	);
 }
 
-// add_action( 'init', function(){
-//     add_rewrite_rule(
-//         'quiz/([a-z]+)/?$',
-//         'index.php?quiz=$matches[1]',
-//         'top' );
-// } );
+add_action( 'init', function(){
+    add_rewrite_rule(
+        'quizes/([a-z]+)/?$',
+        'index.php?quiz=$matches[1]',
+        'top' );
+} );
 
-// add_filter( 'query_vars', function($query_vars){
-//     $query_vars[] = 'quiz';
-//     return $query_vars;
-// } );
+add_filter( 'query_vars', function($query_vars){
+    $query_vars[] = 'quiz';
+    return $query_vars;
+} );
 
-// add_action('template_include', function($template){
-// 	if ( get_query_var('quiz') == false || get_query_var('quiz') == '' ){
-// 		return $template;
-// 	}
-// 	return get_template_directory . '/quiz.php';
-// });
+add_action('template_include', function($template){
+	if ( get_query_var('quiz') == false || get_query_var('quiz') == '' ){
+		return $template;
+	}
+	// return get_template_directory() . '/quiz.php';
+	return plugin_dir_path( __FILE__ ) . '/quiz.php';
+});
 
 // add_action( 'init', 'wpse26388_rewrites_init' );
 // function wpse26388_rewrites_init(){
@@ -169,3 +170,14 @@ function bt_get_question( $id ) {
 //     $query_vars[] = 'quiz_id';
 //     return $query_vars;
 // }
+
+add_action('init', function() {
+	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
+	if ( $url_path === 'retail' ) {
+	   // load the file if exists
+	   $load = locate_template('template-retail.php', true);
+	   if ($load) {
+		  exit(); // just exit if template was found and loaded
+	   }
+	}
+  });

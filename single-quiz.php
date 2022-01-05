@@ -1,129 +1,21 @@
-<!-- <style>
-    .congrats-modal .modal-content {
-        position: relative;
-        text-align: center;
-    }
-
-    .congrats-modal .modal-content .close {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 30px;
-        height: 30px;
-        background: red;
-        color: #ffffff;
-        z-index: 2;
-    }
-
-    .congrats-modal .modal-content .modal-body {
-        padding: 4rem 2rem;
-    }
-
-    .congrats-modal .modal-content .modal-body .percentage {
-        font-size: 30px;
-    }
-
-    .quiz-reference a {
-        text-decoration: none;
-        color: #000000;
-    }
-
-    .quiz-reference a:hover {
-        color: #000000;
-    }
-
-    .answers .answer {
-    background: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid #75c41b;
-    text-transform: capitalize;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    }
-</style>
-<section id="singleQuiz" class="section-bottom-gap section-top-gap section-light-bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 pb-4 pb-lg-0">
-                <?php 
-
-                global $wpdb;
-                    // $result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quizes" );
-                    // foreach ( $result as $quiz )   {
-                       $image = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
-                      $title = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
-                ?>
-                <div class="cover">
-                    <img class="img-fluid" src="<?php echo $image->image ?>"
-                        alt="">
-                </div>
-                <div class="title">
-                    <h2 class="py-3">
-                        <?php echo $title->title ?>
-                    </h2>
-                </div>
-
-                <div class="owl-carousel">
-                    <?php
-                        //global $wpdb;
-                        //$result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quiz_questions" );
-                        //foreach ( $result as $ques )   {
-                        ?>
-                            <div class="question-sliders">
-                                <div>
-                                    <img src="https://quiz.coconutforlife.org/storage/images/question/thumbnail/1608537705.png" alt="">
-                                </div>
-                                <ul class="answers">
-                                    <li class="answer d-flex align-items-center justify-content-between"
-                                        data-quiz="as" data-question="as"
-                                        data-answer="as">assas
-                                        <div class="icon">
-                                            <i class="fas fa-check-circle text-success d-none"></i>
-                                            <i class="fas fa-times-circle text-danger d-none"></i>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        <?php //} ?>
-                </div>
-                
-            </div>
-        </div>
-</section>
-
-<script>
-    jQuery(document).ready(function(){
-    jQuery(".owl-carousel").owlCarousel({
-        loop:true,
-    margin:10,
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:1,
-            nav:true
-        },
-        600:{
-            items:3,
-            nav:false
-        },
-        1000:{
-            items:1,
-            nav:true,
-            loop:false
-        }
-    }
-    });
-    });
-</script> -->
-
+<?php
+/*
+Template Name: Quiz Details
+Template Post Type: post, page, event
+*/
+?>
 
 <?php
 $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 ?>
+
+<?php get_header(); ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
 
 <style>
 html,body{
@@ -312,22 +204,20 @@ button.close {
 </div>
 <?php 
         
-        // $quizId = $_GET['quiz'];
-        global $wpdb;
-        $results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}quizes" );
-        $quiz = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
+        $quizId = $_GET['quiz'];
         
-        // $quizURL = "https://quiz.coconutforlife.org/api/quiz-detail/" . $   ;
-        // $response = wp_remote_get($quizURL);
-        // if(is_array($response)){
-        //     $quiz = json_decode($response['body']);             
+        
+        $quizURL = "https://quiz.coconutforlife.org/api/quiz-detail/" . $quizId;
+        $response = wp_remote_get($quizURL);
+        if(is_array($response)){
+            $quiz = json_decode($response['body']);             
 ?>
-<?php  //if($uriSegments[1] == 'bn'){ ?>
+<?php  if($uriSegments[1] == 'bn'){ ?>
 
 
     <div class="question">
         <div class="cover">
-            <img class="img-fluid" src="<?php echo $quiz; ?>" alt="">
+            <img class="img-fluid" src="<?php echo $quiz->thumbnail; ?>" alt="">
         </div>
         <div class="title">
             <h1 class="py-3 font-ubuntu" style="margin-bottom:50px;">
@@ -361,6 +251,9 @@ button.close {
     </div>
 </div>
 
+<?php }?>
+
+<?php } ?>
 
 
 <!-- Congrats Modal -->
@@ -491,3 +384,4 @@ Don't forget to share this quiz with your friends!</h3>
         })
     })
 </script>
+<?php get_footer(); ?>
