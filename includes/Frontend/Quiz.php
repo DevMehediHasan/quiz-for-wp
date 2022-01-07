@@ -14,9 +14,9 @@ class Quiz
 
 	public function render_shortcode( $atts, $content = '') {
 		// wp_enqueue_script('owl-carousel-script');
-		wp_enqueue_script('bootstrap-script');
+		//wp_enqueue_script('bootstrap-script');
 		// wp_enqueue_style('owl-carousel-style');
-		wp_enqueue_style('bootstrap-style');
+		//wp_enqueue_style('bootstrap-style');
 
 		ob_start();
 		include __DIR__ . '/views/quiz.php';

@@ -1,50 +1,17 @@
+<?php
+/*
+Template Name: Quiz
+Template Post Type: post, page, event
+*/
+?>
 
-<style type="text/css">
-
-
-.align-content{
-  width: 100%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-}
-.position-relative{
-  position: relative;
-}
-
-.align-content a {
-    color: #000000;
-    text-decoration: none;
-}
-</style>
-
-<?php 
-global $wpdb;
-    $result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quizes" );
-    foreach ( $result as $quiz )   {
-      // print_r($quiz);
+<?php
+$uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 ?>
 
 
-<div class="card mb-3" style="max-width: 70%;">
-  <div class="row g-0">
-    <div class="col-md-6">
-      <img src="<?php echo wp_get_original_image_url( $quiz->image );  ?>" class="img-fluid">
-    </div>
-    <div class="col-md-6 position-relative">
-      <div class="card-body align align-content">
-       <a href="<?php echo BT_QUIZ_URL . '/includes/Frontend/views/single-quiz.php?id= '.$quiz->id.' '; ?>"><h2 class="card-title"><?php echo $quiz->title;?></h2> </a>
-      </div>
-    </div>
-  </div>
-</div>
 
-<?php } ?>
-
-<!-- 
-
+<?php //get_header(); ?>
 <style>
 .quiz-wrap {
     display: flex;
@@ -62,9 +29,11 @@ global $wpdb;
     box-shadow: 1px 1px 10px rgb(0 0 0 / 4%);
     transform:scale(1.02);
 }
-
+.quiz-banner-image img {
+    width: 100%;
+}
 .quiz-wrap .title{
-    font-size: 36px;
+    font-size: 32px;
     padding: 15px;
     margin: 0;
 }
@@ -107,16 +76,37 @@ global $wpdb;
 <?php  if($uriSegments[1]){ ?>
  <div class="row quiz-wrap mb-3">
     <div class="col-md-6 p-lg-0">
-        <a href="http://localhost/beatnik/quiz/detail/?quiz=<?php echo $quiz->id;?>" class="d-block">
+        <a href="http://beatnik.mehedi/quiz/detail/?quiz=<?php echo $quiz->id;?>" class="d-block">
             <img class="img-fluid" src="<?php echo wp_get_original_image_url( $quiz->image ); ?>" />
         </a>
     </div>
     <div class="col-md-6 align-self-center">
-        <a href="http://localhost/beatnik/quiz/detail/?quiz=<?php echo $quiz->id;?>" class="d-block p-3">
+        <a href="http://beatnik.mehedi/quiz/detail/?quiz=<?php echo $quiz->id;?>" class="d-block p-3" style="text-decoration: none;">
             <h2 class="title"><?php echo $quiz->title; ?></h2>
         </a>
     </div>
 </div>
 <?php }
         }
-?> -->
+?>
+
+
+
+
+
+
+
+<!--<section id="quizzesWrap" class="section-bottom-gap section-top-gap section-light-bg">-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-lg-8 col-md-8">-->
+<!--                <div class="col-lg-12 col-md-12">-->
+<!--                    <div id="quizzes"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<?php //get_footer(); ?>
+

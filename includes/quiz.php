@@ -253,7 +253,7 @@ $myAnswer = json_decode($question->answer);
                         ?>
                     <li id="answer_<?php echo $answer->id; ?>" class="answer d-flex align-items-center justify-content-between font-ubuntu"
                         data-quiz="<?php //echo $quiz->quizEn; ?>" data-question="<?php //echo $question->id; ?>"
-                        data-answer="<?php echo $answer->status; ?> ">
+                        data-answer="<?php echo $answer->status; ?>">
                         <?php echo $answer->title; ?> 
                         <div class="icon">
                             <i class="fas fa-check-circle text-success d-none"></i>
@@ -339,28 +339,32 @@ $myAnswer = json_decode($question->answer);
             let questionId = $(this).attr('data-question');
             let _this = this;
             let status = $(this).attr('data-answer');
-            alert(status);
+            // alert(status);
             //let url = "https://quiz.coconutforlife.org/api/answer/"+questionId;
 
 // $(_this).children().children().removeClass('d-none');
 // $(_this).siblings().children().children().removeClass('d-none');
-$(_this).children().children().each(function () {
-            // $(this).removeClass("active").addClass('baz');
-            
-            var st = $(this).hasClass('text-success');
-            var std = $(this).hasClass('text-danger');
-            console.log(st && status === '')
+
+// console.log($(_this).children().children(':last-child').removeClass('d-none'))
+// console.log(status)
+
+if (status != 'true') {    
+    $(_this).children().children(':last-child').removeClass('d-none')
+} if(status == 'true'){
+    $(_this).children().children(':first-child').removeClass('d-none')
+}
+
+$(_this).siblings().each(function () {
             console.log(this)
-            console.log('status')
-            console.log(status)
-            if(st && status === true){
-                $(this).removeClass('d-none');
-            }
-            if(std || status === ''){
-                $(this).removeClass('d-none');
+            let statuschild = $(this).attr('data-answer');
+            console.log(statuschild)
+
+            if (statuschild != 'true') {    
+                $(this).children().children(':last-child').removeClass('d-none')
+            } if(statuschild == 'true'){
+                $(this).children().children(':first-child').removeClass('d-none')
             }
         });
-
             
                                 // $(_this).siblings().each(function() {
                                 //     if(answer2.answer && answer2.id === parseInt($(this).attr('data-answer'))){

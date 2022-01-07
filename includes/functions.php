@@ -32,7 +32,7 @@ function bt_insert_quiz( $args = []){
 	return $wpdb->insert_id;
 }
 
-function bt_get_quiz( $args= []) {
+function bt_get_quizes( $args= []) {
 	global $wpdb;
 
 	$defaults  = [
@@ -61,6 +61,23 @@ function bt_quiz_count(){
 	return (int) $wpdb->get_var("SELECT count(id) FROM {$wpdb->prefix}quizes");
 }
 
+function bt_get_quiz( $id ) {
+	global $wpdb;
+
+	return $wpdb->get_row(
+		$wpdb->prepare("SELECT * FROM {$wpdb->prefix}quizes WHERE id = %d", $id )
+	);
+}
+
+function bt_delete_quiz($id){
+	global $wpdb;
+	return $wpdb->delete(
+		$wpdb->prefix . 'quizes',
+		['id' => $id],
+		['%d']
+	);
+}
+
 
 
 
@@ -82,22 +99,44 @@ function bt_insert_question( $args = []){
 	];
 
 	$data = wp_parse_args( $args, $defaults);
-	// var_dump($data);
-	$inserted = $wpdb->insert(
-		"{$wpdb->prefix}quiz_questions",
-		$data,
-		[
-			'%d',
-			'%s',
-			'%s',
-			'%s'
-		]
-	);
 
-	if (! $inserted) {
-		return new \WP_Error('failed-to-insert', __('Failed to insert data', 'beatnik-quiz'));
+	if (isset($data['id'])) {
+
+		$id = $data['id'];
+		unset($data['id']);
+
+		$updated = $wpdb->update(
+			$wpdb->prefix . 'quiz_questions',
+			$data,
+			[ 'id' => $id],
+			[
+				'%d',
+				'%s',
+				'%s',
+				'%s'
+			],
+			['%id']
+		);
+		return $updated;
+		
+	} else {
+	// var_dump($data);
+		$inserted = $wpdb->insert(
+			"{$wpdb->prefix}quiz_questions",
+			$data,
+			[
+				'%d',
+				'%s',
+				'%s',
+				'%s'
+			]
+		);
+
+		if (! $inserted) {
+			return new \WP_Error('failed-to-insert', __('Failed to insert data', 'beatnik-quiz'));
+		}
+		return $wpdb->insert_id;
 	}
-	return $wpdb->insert_id;
 }
 
 function bt_get_questions( $args= []) {
@@ -137,25 +176,43 @@ function bt_get_question( $id ) {
 	);
 }
 
-add_action( 'init', function(){
-    add_rewrite_rule(
-        'quizes/([a-z]+)/?$',
-        'index.php?quiz=$matches[1]',
-        'top' );
-} );
+function bt_delete_question($id){
+	global $wpdb;
+	return $wpdb->delete(
+		$wpdb->prefix . 'quiz_questions',
+		['id' => $id],
+		['%d']
+	);
+}
 
-add_filter( 'query_vars', function($query_vars){
-    $query_vars[] = 'quiz';
-    return $query_vars;
-} );
 
-add_action('template_include', function($template){
-	if ( get_query_var('quiz') == false || get_query_var('quiz') == '' ){
-		return $template;
-	}
-	// return get_template_directory() . '/quiz.php';
-	return plugin_dir_path( __FILE__ ) . '/quiz.php';
-});
+
+
+
+
+
+
+
+
+// add_action( 'init', function(){
+//     add_rewrite_rule(
+//         'quizes/([a-z]+)/?$',
+//         'index.php?quiz=$matches[1]',
+//         'top' );
+// } );
+
+// add_filter( 'query_vars', function($query_vars){
+//     $query_vars[] = 'quiz';
+//     return $query_vars;
+// } );
+
+// add_action('template_include', function($template){
+// 	if ( get_query_var('quiz') == false || get_query_var('quiz') == '' ){
+// 		return $template;
+// 	}
+// 	// return get_template_directory() . '/quiz.php';
+// 	return plugin_dir_path( __FILE__ ) . '/quiz.php';
+// });
 
 // add_action( 'init', 'wpse26388_rewrites_init' );
 // function wpse26388_rewrites_init(){
@@ -171,13 +228,13 @@ add_action('template_include', function($template){
 //     return $query_vars;
 // }
 
-add_action('init', function() {
-	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
-	if ( $url_path === 'retail' ) {
-	   // load the file if exists
-	   $load = locate_template('template-retail.php', true);
-	   if ($load) {
-		  exit(); // just exit if template was found and loaded
-	   }
-	}
-  });
+// add_action('init', function() {
+// 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
+// 	if ( $url_path === 'retail' ) {
+// 	   // load the file if exists
+// 	   $load = locate_template('template-retail.php', true);
+// 	   if ($load) {
+// 		  exit(); // just exit if template was found and loaded
+// 	   }
+// 	}
+//   });

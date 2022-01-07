@@ -28,7 +28,9 @@ class Admin
 	public function dispatch_actions($quiz,$question){
 		
 		add_action( 'admin_init', [$quiz, 'form_handler'] );
+		add_action( 'admin_post_bt_delete_quiz', [$quiz, 'delete_quiz'] );
 		add_action( 'admin_init', [$question, 'form_handler_question'] );
+		add_action( 'admin_post_bt_delete_question', [$question, 'delete_question'] );
 	}
 
 	// public function dispatch_actions_question($question){

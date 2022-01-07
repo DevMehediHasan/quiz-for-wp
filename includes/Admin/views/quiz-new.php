@@ -7,6 +7,8 @@
 <div class="wrap">
 	<h1 class="wp-heading-inline"><?php _e('New Quiz', 'beatnik-quiz'); ?></h1>
 
+	<a class="page-title-action" href="<?php echo admin_url('admin.php?page=beatnik-quiz'); ?>"><?php _e('Back', 'beatnik-quiz'); ?></a>
+
 	<?php //var_dump($this->errors); ?>
 	<form action="" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 		<table class="form-table">

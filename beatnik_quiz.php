@@ -3,7 +3,7 @@
 /** 
  * Plugin Name:       Beatnik Quiz
  * Plugin URI:        https://github.com/DevMehediHasan
- * Description:       Quiz manage for WordPress Developed by Beatnik.
+ * Description:       Quiz manage for WordPress Developed by Beatnik Technology.
  * Version:           1.0
  * Author:            Mehedi Hasan
  * Author URI:        https://github.com/DevMehediHasan

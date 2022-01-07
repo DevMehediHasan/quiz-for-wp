@@ -22,11 +22,11 @@ class Menu
 	public function admin_menu(){
 		$parent_slug ='beatnik-quiz';
 		$capability ='manage_options';
-		add_menu_page( __( 'Beatnik Quiz', 'beatnik-quiz'), __( 'Quizs', 'beatnik-quiz' ), $capability, $parent_slug, [ $this->quiz, 'plugin_page'], 'dashicons-games' );
+		add_menu_page( __( 'Beatnik Quiz', 'beatnik-quiz'), __( 'Quizes', 'beatnik-quiz' ), $capability, $parent_slug, [ $this->quiz, 'plugin_page'], 'dashicons-games' );
 
-		add_submenu_page($parent_slug, __('Quizs', 'beatnik-quiz'), __('Quizs', 'beatnik-quiz'), $capability, $parent_slug, [$this->quiz, 'plugin_page']);
+		add_submenu_page($parent_slug, __('Quizes', 'beatnik-quiz'), __('Quizes', 'beatnik-quiz'), $capability, $parent_slug, [$this->quiz, 'plugin_page']);
 
-		add_submenu_page($parent_slug, __('Question', 'beatnik-quiz'), __('Question', 'beatnik-quiz'), $capability, 'beatnik-question', [$this->question, 'bt_question_page']);
+		add_submenu_page($parent_slug, __('Question', 'beatnik-quiz'), __('Questions', 'beatnik-quiz'), $capability, 'beatnik-question', [$this->question, 'bt_question_page']);
 	}
 
 	

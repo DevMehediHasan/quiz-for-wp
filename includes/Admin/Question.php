@@ -18,6 +18,7 @@ class Question
 				break;
 
 			case 'edit':
+				$question = bt_get_question($id);
 				$template = __DIR__ . '/views/question-edit.php';
 				break;
 
@@ -49,6 +50,7 @@ class Question
 			wp_die('Are You Cheating?');
 		}
 
+		$id 	= isset($_POST['id']) ? intval( $_POST['id']) : 0;
 		$quiz_id = isset( $_POST['quiz_id']) ? $_POST['quiz_id']: '';
 
 		// $question = isset( $_POST['question']) ? sanitize_file_name( $_POST['question']): '';
@@ -84,18 +86,51 @@ class Question
 		}
 		// print_r($some);
 		// wp_die(print_r($answer));
-		$insert_id = bt_insert_question([
+		$args =[
 			'quiz_id'	=> $quiz_id,
 			'question'	=> $question,
 			// 'answer'	=> 'একজন প্রকৃত',
 			'answer'	=> wp_json_encode($some, JSON_UNESCAPED_UNICODE),
-		]);
+		];
+
+		if ($id) {
+			$args['id'] = $id;
+		}
+
+		$insert_id = bt_insert_question( $args);
 		// var_dump($insert_id);
 
 		if (is_wp_error($insert_id)) {
 			wp_die($insert_id->get_error_message());
 		}
-		$redirected_to = admin_url('admin.php?page=beatnik-question&inserted=true');
+
+		if ($id) {
+			$redirected_to = admin_url('admin.php?page=beatnik-question&action=edit&question-updated=true&id=' . $id);
+		} else {
+			$redirected_to = admin_url('admin.php?page=beatnik-question&inserted=true');
+		}
+
+		
+		wp_redirect($redirected_to);
+		exit;
+	}
+
+	public function delete_question(){
+		if (! wp_verify_nonce( $_REQUEST['_wpnonce'], 'bt_delete_question')) {
+			wp_die('Are You Cheating?');
+		}
+
+		if ( ! current_user_can('manage_options')) {
+			wp_die('Are You Cheating?');
+		}
+
+		$id 	= isset($_REQUEST['id']) ? intval( $_REQUEST['id']) : 0;
+
+		if (bt_delete_question($id)) {
+			$redirected_to = admin_url('admin.php?page=beatnik-question&question-deleted=true');
+		} else{
+			$redirected_to = admin_url('admin.php?page=beatnik-question&question-deleted=false');
+		}
 		wp_redirect($redirected_to);
 		exit;
 	}

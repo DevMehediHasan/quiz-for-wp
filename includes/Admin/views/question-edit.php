@@ -2,7 +2,11 @@
 <div class="wrap">
 	<h1 class="wp-heading-inline"><?php _e('Edit Question', 'beatnik-quiz'); ?></h1>
 
-	<?php //var_dump($this->errors); ?>
+	<?php if (isset($_GET['question-updated'])) { ?>
+			<div class="notice notice-success">
+				<p><?php _e('Question has been updated Successfully!', 'beatnik-quiz'); ?></p>
+			</div>
+		<?php } ?>
 	<form action="" method="POST">
 		<table class="form-table">
 			<tbody class="input_fields_wrap input_qfields_wrap">
@@ -18,7 +22,7 @@
 						$result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quizes ");
 						?>
 						<select name="quiz_id">
-						  <option value="">Select Your Quiz Title</option>
+						  <option value="<?php echo esc_attr($question->id); ?>"><?php echo esc_attr($question->id); ?></option>
 						  <?php
 						  foreach( $result as $value ) { ?>
 						    <option value="<?php echo $value->id; ?>"><?php echo $value->title; ?></option>
@@ -35,28 +39,25 @@
 				<tr>
 					<th scope="row">
 						<label for="question"><?php _e('Question', 'beatnik-quiz'); ?></label>
-						<input type="file" name="question" id="question" class="regular-text" value="">
-						<?php if (isset($this->errors['question'])){ ?>
-							<p class="description error"><?php echo $this->errors['question'] ?></p>
-						<?php } ?>
+						<input type="file" name="question" id="question" class="regular-text" value="<?php echo esc_attr($question->question); ?>">
 					</th>
 				</tr>
 				</div>
 				<div>
+					<?php foreach( $question as $questionv) {?>
 				<tr>
+					
 					<th scope="row">
 						<label for="answer[0][]"><?php _e('Answer', 'beatnik-quiz'); ?></label>
-						<input type="text" name="answer[0][]"  value=""/>
+						<input type="text" name="answer[0][]"  value="<?php echo esc_attr($questionv->answer) ?>"/>
 					</th>
 					<th scope="row">
 						<label for="answer[0][]"><?php _e('Correct Answer?', 'beatnik-quiz'); ?></label>
 						<input type="checkbox" name="answer[0][]"  value="true"/>
 					</th>
-					<td>
-						<button class="add_field_button">Add More Answer</button>
-						
-					</td>
+
 				</tr>
+				<?php } ?>
 				</div>
 			</div>
 					

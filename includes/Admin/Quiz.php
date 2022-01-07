@@ -10,6 +10,7 @@ class Quiz
 
 	public function plugin_page() {
 		$action = isset( $_GET['action']) ? $_GET['action'] : 'list';
+		$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 		switch ( $action ) {
 			case 'new':
@@ -17,6 +18,7 @@ class Quiz
 				break;
 
 			case 'edit':
+				$quiz = bt_get_quiz($id);
 				$template = __DIR__ . '/views/quiz-edit.php';
 				break;
 
@@ -47,7 +49,8 @@ class Quiz
 		if ( ! current_user_can('manage_options')) {
 			wp_die('Are You Cheating?');
 		}
-
+		
+		$id 	= isset($_POST['id']) ? intval( $_POST['id']) : 0;
 		$title = isset( $_POST['title']) ? sanitize_text_field( $_POST['title']): '';
 
 		// $image = isset( $_POST['image']) ? sanitize_file_name( $_POST['image']): '';
@@ -90,5 +93,25 @@ class Quiz
 			return $this->errors[ $key ];
 		}
 		return false;
+	}
+
+	public function delete_quiz(){
+		if (! wp_verify_nonce( $_REQUEST['_wpnonce'], 'bt_delete_question')) {
+			wp_die('Are You Cheating?');
+		}
+
+		if ( ! current_user_can('manage_options')) {
+			wp_die('Are You Cheating?');
+		}
+
+		$id 	= isset($_REQUEST['id']) ? intval( $_REQUEST['id']) : 0;
+
+		if (bt_delete_question($id)) {
+			$redirected_to = admin_url('admin.php?page=beatnik-quiz&quiz-deleted=true');
+		} else{
+			$redirected_to = admin_url('admin.php?page=beatnik-quiz&quiz-deleted=false');
+		}
+		wp_redirect($redirected_to);
+		exit;
 	}
 }

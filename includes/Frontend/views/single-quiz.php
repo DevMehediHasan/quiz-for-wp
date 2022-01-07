@@ -1,129 +1,18 @@
-<!-- <style>
-    .congrats-modal .modal-content {
-        position: relative;
-        text-align: center;
-    }
-
-    .congrats-modal .modal-content .close {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 30px;
-        height: 30px;
-        background: red;
-        color: #ffffff;
-        z-index: 2;
-    }
-
-    .congrats-modal .modal-content .modal-body {
-        padding: 4rem 2rem;
-    }
-
-    .congrats-modal .modal-content .modal-body .percentage {
-        font-size: 30px;
-    }
-
-    .quiz-reference a {
-        text-decoration: none;
-        color: #000000;
-    }
-
-    .quiz-reference a:hover {
-        color: #000000;
-    }
-
-    .answers .answer {
-    background: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid #75c41b;
-    text-transform: capitalize;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    }
-</style>
-<section id="singleQuiz" class="section-bottom-gap section-top-gap section-light-bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 pb-4 pb-lg-0">
-                <?php 
-
-                global $wpdb;
-                    // $result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quizes" );
-                    // foreach ( $result as $quiz )   {
-                       $image = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
-                      $title = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
-                ?>
-                <div class="cover">
-                    <img class="img-fluid" src="<?php echo $image->image ?>"
-                        alt="">
-                </div>
-                <div class="title">
-                    <h2 class="py-3">
-                        <?php echo $title->title ?>
-                    </h2>
-                </div>
-
-                <div class="owl-carousel">
-                    <?php
-                        //global $wpdb;
-                        //$result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}quiz_questions" );
-                        //foreach ( $result as $ques )   {
-                        ?>
-                            <div class="question-sliders">
-                                <div>
-                                    <img src="https://quiz.coconutforlife.org/storage/images/question/thumbnail/1608537705.png" alt="">
-                                </div>
-                                <ul class="answers">
-                                    <li class="answer d-flex align-items-center justify-content-between"
-                                        data-quiz="as" data-question="as"
-                                        data-answer="as">assas
-                                        <div class="icon">
-                                            <i class="fas fa-check-circle text-success d-none"></i>
-                                            <i class="fas fa-times-circle text-danger d-none"></i>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        <?php //} ?>
-                </div>
-                
-            </div>
-        </div>
-</section>
-
-<script>
-    jQuery(document).ready(function(){
-    jQuery(".owl-carousel").owlCarousel({
-        loop:true,
-    margin:10,
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:1,
-            nav:true
-        },
-        600:{
-            items:3,
-            nav:false
-        },
-        1000:{
-            items:1,
-            nav:true,
-            loop:false
-        }
-    }
-    });
-    });
-</script> -->
 
 
 <?php
 $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+// print_r(explode('?',$_SERVER['REQUEST_URI'])[1]);
+// print_r(explode('=',$_SERVER['QUERY_STRING'])[1]);
+$quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
 ?>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
 
 <style>
 html,body{
@@ -147,11 +36,16 @@ html,body{
     margin:0;
 }
 
+.answers ol, ul {
+    padding-left: 0 !important;
+}
+
 .answers .answer {
     background: #f9f9f9;
     padding: 10px;
     margin-bottom: 5px;
     border-bottom: 1px solid #75c41b;
+    font-size: 14px;
     text-transform: capitalize;
     cursor: pointer;
     display: flex;
@@ -224,7 +118,9 @@ html,body{
     -webkit-transform: translate(0,-50px);
     transform: translate(0,-50px);
 }
-
+.quiz-banner-image img {
+    width: 100%;
+}
 .modal-dialog {
     position: relative;
     width: auto;
@@ -313,42 +209,58 @@ button.close {
 <?php 
         
         // $quizId = $_GET['quiz'];
-        global $wpdb;
-        $results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}quizes" );
-        $quiz = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes" );
         
-        // $quizURL = "https://quiz.coconutforlife.org/api/quiz-detail/" . $   ;
+        
+        // $quizURL = "https://quiz.coconutforlife.org/api/quiz-detail/" . $quizId;
         // $response = wp_remote_get($quizURL);
         // if(is_array($response)){
-        //     $quiz = json_decode($response['body']);             
+        //     $quiz = json_decode($response['body']);      
+        
+        global $wpdb;
+        $results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}quiz_questions WHERE quiz_id = $quizID" );
+        
+        // $quiz = json_decode($results['body']);
+        // $id = $_GET['id'];
+        $image = $wpdb->get_var( "SELECT image FROM {$wpdb->prefix}quizes WHERE id = $quizID");
+        $title = $wpdb->get_var( "SELECT title FROM {$wpdb->prefix}quizes WHERE id = $quizID");
+        // var_dump($title);
+        // $title = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes WHERE id = $quizID" );
+        // $questions = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}quiz_questions WHERE quiz_id = $quizID" );
+        
 ?>
-<?php  //if($uriSegments[1] == 'bn'){ ?>
+<?php //if($quizID[1]){ ?>
 
 
     <div class="question">
         <div class="cover">
-            <img class="img-fluid" src="<?php echo $quiz; ?>" alt="">
+            <img class="img-fluid" src="<?php echo wp_get_original_image_url( $image );?>" alt="">
         </div>
         <div class="title">
             <h1 class="py-3 font-ubuntu" style="margin-bottom:50px;">
-                <?php echo $quiz->quizBn; ?>
+                <?php echo $title; ?>
             </h1>
         </div>
 
 
     
     <div class="owl-carousel owl-theme question-carousel">
-        <?php foreach($quiz->questions as $key => $question){ ?>
+         <div class="owl-carousel owl-theme question-carousel">
+        <?php foreach($results as $question){
+// print_r(json_decode($question->answer));
+$myAnswer = json_decode($question->answer);
+         ?>
             <div class="item">
                 <div class="question-slider-images">
-                <img src="<?php echo $question->thumbnailBn; ?>" alt=""/>
+                <img src="<?php echo wp_get_original_image_url($question->question); ?>" alt=""/>
                 </div>
                 <ul class="answers">
-                    <?php foreach($question->answers as $answer){?>
-                    <li class="answer d-flex align-items-center justify-content-between font-ubuntu"
-                        data-quiz="<?php echo $quiz->quizEn; ?>" data-question="<?php echo $question->id; ?>"
-                        data-answer="<?php echo $answer->id; ?> ">
-                        <?php echo $answer->answerBn; ?> 
+                    <?php foreach($myAnswer as $answer){
+// print_r($answer);
+                        ?>
+                    <li id="answer_<?php echo $answer->id; ?>" class="answer d-flex align-items-center justify-content-between font-ubuntu"
+                        data-quiz="<?php //echo $quiz->quizEn; ?>" data-question="<?php //echo $question->id; ?>"
+                        data-answer="<?php echo $answer->status; ?>">
+                        <?php echo $answer->title; ?> 
                         <div class="icon">
                             <i class="fas fa-check-circle text-success d-none"></i>
                             <i class="fas fa-times-circle text-danger d-none"></i>
@@ -360,6 +272,10 @@ button.close {
         <?php } ?>
     </div>
 </div>
+
+<?php //} ?>
+
+
 
 
 
@@ -381,6 +297,7 @@ button.close {
 
 <script>
     $(document).ready(function(){
+        console.log('asd')
         let langurls = $('.wpml-ls-link');
         let urlbn = "<?php echo $quiz->urlBn;?>";
         let urlen = "<?php echo $quiz->urlEn;?>";
@@ -392,55 +309,81 @@ button.close {
                 $(langurl).attr('href', `https://coconutforlife.org/bn/quiz/detail/?quiz=${urlbn}`);
             }
         });
-    });
-</script>
+    
+     $('.owl-carousel').owlCarousel({
+                navigation : false,
+                loop:false,
+                margin:10,
+                nav:false,
+                mouseDrag:false,
+                dots:true,
+                autoplay:false,
+                responsive:{
+                    0:{
+                        items:1
+                    },
+                    600:{
+                        items:1
+                    },
+                    1000:{
+                        items:1
+                    }
+                }
+            })
 
+     $( '.owl-dot' ).on( 'click', function() {
+                return false;
+            })
 
-<script>
-    $(document).ready(function(){
-        let questionSlider = $('.owl-carousel');  
-         let rightAnswers = 0;
+     $(document).on('click','.close', function(){
+            window.location.reload();
+        })
+        let rightAnswers = 0;
         let wrongAnswers = 0;
-        let slideCount = 0;
-        let totalQuestion = "<?php echo count($quiz->questions); ?>";
+        let currentCount = 0;
+        let slideCount = <?php echo count($results); ?>;
+        // console.log(slideCount)
+
+       
 
         $(document).on('click','.answer',function() {
+            let ansId = $(this).attr('id');
+            
             let questionId = $(this).attr('data-question');
             let _this = this;
-            let answerId = $(this).attr('data-answer');
-            let url = "https://quiz.coconutforlife.org/api/answer/"+questionId;
+            let status = $(this).attr('data-answer');
+            if (status) {
+                rightAnswers++;
+            }
+            // console.log(rightAnswers);
+            
 
-            $.ajax({
-                type:'POST',
-                url:url,
-                dataType:'json',
-                success:function(data){
-                    $.each(data, function(key, answer){
-                        if(answer.id === parseInt(answerId) && answer.answer){
-                            $(_this).children().children(':first-child').removeClass('d-none');
-                            ++rightAnswers;
-                        }else if(answer.id === parseInt(answerId) && !answer.answer){
-                            ++wrongAnswers;
-                            $.each(data, function(key, answer2){
-                                $(_this).siblings().each(function() {
-                                    if(answer2.answer && answer2.id === parseInt($(this).attr('data-answer'))){
-                                        $(this).children().children(':first-child').removeClass('d-none')
-                                    }
-                                });
-                            });
-                            $(_this).children().children(':last-child').removeClass('d-none')
-                        }
-                    })
-                    ++slideCount;
-                    setTimeout(() => {
-                        questionSlider.trigger('next.owl.carousel');
-                    }, 1000);
-                },
-                complete: function(data) {
-                    let percentage = (rightAnswers / (rightAnswers + wrongAnswers)) * 100;
-                    if(slideCount == parseInt(totalQuestion)){
-                        $('.congrats-modal').addClass('show');
-                       if(Math.round(percentage) < 60){
+            if (status != 'true') {    
+                $(_this).children().children(':last-child').removeClass('d-none')
+            } if(status == 'true'){
+                $(_this).children().children(':first-child').removeClass('d-none')
+            }
+
+            $(_this).siblings().each(function () {
+                // console.log(this)
+                let statuschild = $(this).attr('data-answer');
+                // console.log(statuschild)
+
+                if (statuschild != 'true') {    
+                    $(this).children().children(':last-child').removeClass('d-none')
+                } if(statuschild == 'true'){
+                    $(this).children().children(':first-child').removeClass('d-none')
+                }
+            });
+
+            setTimeout(() => {
+                $('.owl-carousel').trigger('next.owl.carousel');
+            }, 1000);
+            currentCount++;
+            if (currentCount == slideCount) {
+                let percentage = (rightAnswers / slideCount) * 100;
+                // console.log(percentage);
+                if(Math.round(percentage) < 60){
                                 $('.congratulations').html(`
                             <h3 class="font-ubuntu">You've scored <span class="percentage">${Math.round(percentage)}%</span> on this quiz! Do you want to try again?
 Also, don't forget to share this quiz with your friends!</h3>
@@ -455,39 +398,22 @@ Don't forget to share this quiz with your friends!</h3>
                             <h3 class="font-ubuntu">Congratulations! You've scored <span class="percentage">${Math.round(percentage)}%</span> on this quiz! 
 Don't forget to share this quiz with your friends!</h3>
                             `)
-                            }                    
-                    }
                 }
-            })
-        });
-        
-        $(document).on('click','.close', function(){
-            window.location.reload();
-        })
+                $('.congrats-modal').addClass('show');
 
-        questionSlider.owlCarousel({
-            navigation : false,
-            loop:false,
-            margin:10,
-            nav:false,
-            mouseDrag:false,
-            dots:true,
-            autoplay:false,
-            responsive:{
-                0:{
-                    items:1
-                },
-                600:{
-                    items:1
-                },
-                1000:{
-                    items:1
-                }
             }
-        })
 
-        $( '.owl-dot' ).on( 'click', function() {
-            return false;
-        })
-    })
+            
+                                // $(_this).siblings().each(function() {
+                                //     if(answer2.answer && answer2.id === parseInt($(this).attr('data-answer'))){
+                                //         $(this).children().children(':first-child').removeClass('d-none')
+                                //     }
+                                //     console.log('sfsa')
+                                // });
+                            
+        });
+
+
+    });
 </script>
+
